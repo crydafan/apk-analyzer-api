@@ -31,8 +31,6 @@ class JobCreate(BaseModel):
     Schema for creating a Job
     """
 
-    pass
-
 
 class JobUpdate(BaseModel):
     """
