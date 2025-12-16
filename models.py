@@ -8,7 +8,7 @@ from datetime import datetime
 from sqlalchemy import Column, Enum, DateTime
 from sqlalchemy.dialects.postgresql import UUID
 
-from db import Base
+from lib.db import Base
 from enums import JobStatus
 
 

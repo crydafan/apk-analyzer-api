@@ -7,7 +7,7 @@ from sqlalchemy.orm import Session
 
 from services import database, s3
 import schemas
-from db import get_db
+from lib.db import get_db
 
 
 app = FastAPI()
