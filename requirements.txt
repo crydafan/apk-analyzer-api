@@ -4,3 +4,4 @@ sqlalchemy
 multipart
 pydantic
 psycopg2-binary
+boto3
