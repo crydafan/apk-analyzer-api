@@ -5,9 +5,9 @@ Main
 from fastapi import FastAPI, Depends, HTTPException, UploadFile
 from sqlalchemy.orm import Session
 
-import services
+from services import database
 import schemas
-from database import get_db
+from db import get_db
 
 
 app = FastAPI()
@@ -18,7 +18,7 @@ async def get_job(job_id: str, db: Session = Depends(get_db)):
     """
     Get job by ID
     """
-    job = services.get_job(db, job_id)
+    job = database.get_job(db, job_id)
     if not job:
         raise HTTPException(status_code=404, detail="Job not found")
     return job
@@ -29,4 +29,4 @@ async def create_job(file: UploadFile, db: Session = Depends(get_db)):
     """
     Create a new job
     """
-    return services.create_job(db, schemas.JobCreate())
+    return database.create_job(db, schemas.JobCreate())

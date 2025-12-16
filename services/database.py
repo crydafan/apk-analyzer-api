@@ -1,5 +1,5 @@
 """
-Services
+Database service for job operations
 """
 
 from sqlalchemy.orm import Session
