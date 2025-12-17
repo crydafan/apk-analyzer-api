@@ -5,5 +5,6 @@ python-multipart
 pydantic
 psycopg2-binary
 boto3
+boto3-stubs
 pika
 types-pika
