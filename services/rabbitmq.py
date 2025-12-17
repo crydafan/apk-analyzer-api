@@ -4,7 +4,11 @@ RabbitMQ service module
 
 import os
 import json
+from collections.abc import Callable
+
 import pika
+from pika.adapters.blocking_connection import BlockingChannel
+from pika.spec import Basic, BasicProperties
 
 
 class RabbitMQ:
@@ -37,3 +41,18 @@ class RabbitMQ:
             body=json.dumps(message),
             properties=pika.BasicProperties(delivery_mode=2),
         )
+
+    def consume_messages(
+        self,
+        queue: str,
+        callback: Callable[
+            [BlockingChannel, Basic.Deliver, BasicProperties, bytes], None
+        ],
+    ):
+        """
+        Consume messages from a RabbitMQ queue
+        """
+        self.channel.basic_consume(
+            queue=queue, on_message_callback=callback, auto_ack=True
+        )
+        self.channel.start_consuming()
