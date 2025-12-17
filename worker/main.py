@@ -18,6 +18,8 @@ from lib.db import get_db
 
 from enums import JobStatus
 
+from worker.analysis import analize_apk
+
 
 def main():
     """
@@ -51,6 +53,8 @@ def main():
 
         with tempfile.NamedTemporaryFile() as file:
             s3.download_fileobject(key, file)
+            file.flush()  # Ensure data is written to disk
+            analize_apk(file.name)
 
         print(f"Processed file for job {job}")
 
