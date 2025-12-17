@@ -53,6 +53,12 @@ class RabbitMQ:
         Consume messages from a RabbitMQ queue
         """
         self.channel.basic_consume(
-            queue=queue, on_message_callback=callback, auto_ack=True
+            queue=queue, on_message_callback=callback, auto_ack=False
         )
         self.channel.start_consuming()
+
+    def acknowledge_message(self, delivery_tag: int):
+        """
+        Acknowledge a message
+        """
+        self.channel.basic_ack(delivery_tag=delivery_tag)

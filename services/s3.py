@@ -3,14 +3,18 @@ S3 service module
 """
 
 import os
+from typing import IO
 
 import boto3
+from mypy_boto3_s3 import S3Client
 
 
 class S3:
     """
     S3 service class for handling file operations
     """
+
+    s3_client: S3Client
 
     def __init__(self):
         self.bucket_name = os.getenv("S3_BUCKET_NAME") or ""
@@ -36,3 +40,9 @@ class S3:
         Upload a file to an S3 bucket
         """
         self.s3_client.put_object(Bucket=self.bucket_name, Key=key, Body=body)
+
+    def download_fileobject(self, key: str, file: IO[bytes]):
+        """
+        Download a file object from an S3 bucket
+        """
+        self.s3_client.download_fileobj(Bucket=self.bucket_name, Key=key, Fileobj=file)
