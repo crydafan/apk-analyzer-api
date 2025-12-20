@@ -26,7 +26,8 @@ class RabbitMQ:
         Declare a RabbitMQ queue
         """
 
-        self.channel.queue_declare(queue=queue_name, durable=True)
+        # TODO: Make durable True in production
+        self.channel.queue_declare(queue=queue_name, durable=False)
 
     def publish_message(self, queue: str, message: dict[str, object]):
         """
