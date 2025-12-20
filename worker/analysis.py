@@ -1,4 +1,10 @@
+from loguru import logger
+
 from androguard.misc import AnalyzeAPK
+
+logger.disable("androguard")
+logger.disable("androguard.core")
+logger.disable("androguard.misc")
 
 
 def analize_apk(filename: str):
