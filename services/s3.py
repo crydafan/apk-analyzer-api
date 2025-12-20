@@ -17,7 +17,7 @@ class S3:
     s3_client: S3Client
 
     def __init__(self):
-        self.bucket_name = os.getenv("S3_BUCKET_NAME") or ""
+        self.bucket_name = os.getenv("AWS_S3_BUCKET_NAME") or ""
 
         access_key_id = os.getenv("AWS_ACCESS_KEY_ID")
         secret_access_key = os.getenv("AWS_SECRET_ACCESS_KEY")
