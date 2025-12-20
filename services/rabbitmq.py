@@ -17,9 +17,7 @@ class RabbitMQ:
     """
 
     def __init__(self):
-        rabbitmq_url = (
-            os.getenv("RABBBITMQ_URL") or "amqp://guest:guest@localhost:5672/"
-        )
+        rabbitmq_url = os.getenv("RABBITMQ_URL") or "amqp://guest:guest@localhost:5672/"
         self.connection = pika.BlockingConnection(pika.URLParameters(rabbitmq_url))
         self.channel = self.connection.channel()
 
