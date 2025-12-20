@@ -1,12 +1,16 @@
-from typing import IO
-
-from androguard.core.apk import APK
+from androguard.misc import AnalyzeAPK
 
 
 def analize_apk(filename: str):
-    apk = APK(filename)
+    api_keys_found: list[str] = []
 
-    print(apk.get_package())
-    print(apk.get_permissions())
+    _a, d, _dx = AnalyzeAPK(filename)
 
-    return {"analysis": "This is a mock analysis result."}
+    # Look for strings that resemble API keys in the DEX files
+    for dex in d:
+        strings = dex.get_strings()
+        for s in strings:
+            if "sk-" in s:
+                api_keys_found.append(s)
+
+    return {"analysis": {"api_keys_found": api_keys_found}}

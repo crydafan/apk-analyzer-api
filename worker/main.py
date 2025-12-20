@@ -51,12 +51,15 @@ def main():
             status=JobStatus.IN_PROGRESS,
         )
 
+        analysis_result = {}
+
         with tempfile.NamedTemporaryFile() as file:
             s3.download_fileobject(key, file)
             file.flush()  # Ensure data is written to disk
-            analize_apk(file.name)
+            analysis_result = analize_apk(file.name)
 
         print(f"Processed file for job {job}")
+        print(f"Analysis result: {analysis_result}")
 
         database.update_job(
             db=db,
