@@ -1,4 +1,5 @@
-import Connection, {
+import {
+  Connection,
   type Consumer,
   type ConsumerHandler,
   ConsumerStatus,
