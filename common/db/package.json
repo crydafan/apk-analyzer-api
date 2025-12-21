@@ -1,7 +1,10 @@
 {
-  "name": "db",
+  "name": "@common/db",
   "module": "index.ts",
   "type": "module",
+  "exports": {
+    ".": "./index.ts"
+  },
   "devDependencies": {
     "@types/bun": "latest",
     "@types/pg": "^8.16.0",

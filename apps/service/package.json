@@ -10,6 +10,7 @@
     "typescript": "^5"
   },
   "dependencies": {
-    "elysia": "^1.4.19"
+    "elysia": "^1.4.19",
+    "@common/db": "workspace:*"
   }
 }
