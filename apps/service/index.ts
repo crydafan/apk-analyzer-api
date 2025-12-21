@@ -1,5 +1,6 @@
 import { Elysia, status, t } from "elysia";
 import { db, schema, operator } from "@common/db";
+import { pub } from "@common/rabbit";
 
 const app = new Elysia()
   .get(
@@ -28,6 +29,10 @@ const app = new Elysia()
     "/",
     async ({}) => {
       const [job] = await db.insert(schema.jobsTable).values({}).returning();
+
+      const publisher = pub(["jobs"]);
+      await publisher.send("jobs", { id: job!.id });
+
       return status(201, {
         success: true,
         message: "Job created",

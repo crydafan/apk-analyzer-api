@@ -17,6 +17,7 @@
       "name": "service",
       "dependencies": {
         "@common/db": "workspace:*",
+        "@common/rabbit": "workspace:*",
         "elysia": "^1.4.19",
       },
       "devDependencies": {
@@ -52,7 +53,10 @@
       },
     },
     "common/rabbit": {
-      "name": "rabbit",
+      "name": "@common/rabbit",
+      "dependencies": {
+        "rabbitmq-client": "^5.0.8",
+      },
       "devDependencies": {
         "@types/bun": "latest",
       },
@@ -65,6 +69,8 @@
     "@borewit/text-codec": ["@borewit/text-codec@0.1.1", "", {}, "sha512-5L/uBxmjaCIX5h8Z+uu+kA9BQLkc/Wl06UGR5ajNRxu+/XjonB5i8JpgFMrPj3LXTCPA0pv8yxUvbUi+QthGGA=="],
 
     "@common/db": ["@common/db@workspace:common/db"],
+
+    "@common/rabbit": ["@common/rabbit@workspace:common/rabbit"],
 
     "@drizzle-team/brocli": ["@drizzle-team/brocli@0.10.2", "", {}, "sha512-z33Il7l5dKjUgGULTqBsQBQwckHh5AbIuxhdsIxDDiZAzBOrZO6q9ogcWC65kU382AfynTfgNumVcNIjuIua6w=="],
 
@@ -200,7 +206,7 @@
 
     "postgres-interval": ["postgres-interval@1.2.0", "", { "dependencies": { "xtend": "^4.0.0" } }, "sha512-9ZhXKM/rw350N1ovuWHbGxnGh/SNJ4cnxHiM0rxE4VN41wsg8P8zWn9hv/buK00RP4WvlOyr/RBDiptyxVbkZQ=="],
 
-    "rabbit": ["rabbit@workspace:common/rabbit"],
+    "rabbitmq-client": ["rabbitmq-client@5.0.8", "", {}, "sha512-nNto/okuVq+d/OamRYX4HIiCkHdOE0RICIDRjS4YQUo2DI/l3R9RlsFaEEYSjIc+LT6DV+1wUub3nD1HwrM4SQ=="],
 
     "resolve-pkg-maps": ["resolve-pkg-maps@1.0.0", "", {}, "sha512-seS2Tj26TBVOC2NIc2rOe2y2ZO7efxITtLZcGSOnHHNOQ7CkiUBfw0Iw2ck6xkIhPwLhKNLS8BO+hEpngQlqzw=="],
 
