@@ -24,14 +24,29 @@ const app = new Elysia()
       }),
     }
   )
-  .post("/", async () => {
-    const [job] = await db.insert(schema.jobsTable).values({}).returning();
-    return status(201, {
-      success: true,
-      message: "Job created",
-      data: job,
-    });
-  })
+  .post(
+    "/",
+    async ({}) => {
+      const [job] = await db.insert(schema.jobsTable).values({}).returning();
+      return status(201, {
+        success: true,
+        message: "Job created",
+        data: job,
+      });
+    },
+    {
+      body: t.Object(
+        {
+          file: t.File({
+            error: () => ({ success: false, message: "File is required" }),
+          }),
+        },
+        {
+          error: () => ({ success: false, message: "Invalid request body" }),
+        }
+      ),
+    }
+  )
   .listen(3000);
 
 console.log(
