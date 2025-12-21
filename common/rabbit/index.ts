@@ -67,4 +67,8 @@ async function onShutdown() {
 //process.on("SIGINT", onShutdown);
 //process.on("SIGTERM", onShutdown);
 
-export { pub, sub, ConsumerStatus };
+const Ack = ConsumerStatus.ACK;
+const Requeue = ConsumerStatus.REQUEUE;
+const Drop = ConsumerStatus.DROP;
+
+export { pub, sub, ConsumerStatus, Ack, Requeue, Drop };
