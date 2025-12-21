@@ -12,6 +12,7 @@
   "dependencies": {
     "elysia": "^1.4.19",
     "@common/db": "workspace:*",
-    "@common/rabbit": "workspace:*"
+    "@common/rabbit": "workspace:*",
+    "@common/bucket": "workspace:*"
   }
 }

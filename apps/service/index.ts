@@ -1,6 +1,7 @@
 import { Elysia, status, t } from "elysia";
 import { db, schema, operator } from "@common/db";
 import { pub } from "@common/rabbit";
+import { bucket } from "@common/bucket";
 
 const app = new Elysia()
   .get(
@@ -27,7 +28,11 @@ const app = new Elysia()
   )
   .post(
     "/",
-    async ({}) => {
+    async ({ body }) => {
+      const { file } = body;
+
+      await bucket.upload_file(file.name, await file.bytes());
+
       const [job] = await db.insert(schema.jobsTable).values({}).returning();
 
       const publisher = pub(["jobs"]);

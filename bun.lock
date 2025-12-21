@@ -16,6 +16,7 @@
     "apps/service": {
       "name": "service",
       "dependencies": {
+        "@common/bucket": "workspace:*",
         "@common/db": "workspace:*",
         "@common/rabbit": "workspace:*",
         "elysia": "^1.4.19",
@@ -28,7 +29,7 @@
       },
     },
     "common/bucket": {
-      "name": "bucket",
+      "name": "@common/bucket",
       "devDependencies": {
         "@types/bun": "latest",
       },
@@ -67,6 +68,8 @@
   },
   "packages": {
     "@borewit/text-codec": ["@borewit/text-codec@0.1.1", "", {}, "sha512-5L/uBxmjaCIX5h8Z+uu+kA9BQLkc/Wl06UGR5ajNRxu+/XjonB5i8JpgFMrPj3LXTCPA0pv8yxUvbUi+QthGGA=="],
+
+    "@common/bucket": ["@common/bucket@workspace:common/bucket"],
 
     "@common/db": ["@common/db@workspace:common/db"],
 
@@ -143,8 +146,6 @@
     "@types/pg": ["@types/pg@8.16.0", "", { "dependencies": { "@types/node": "*", "pg-protocol": "*", "pg-types": "^2.2.0" } }, "sha512-RmhMd/wD+CF8Dfo+cVIy3RR5cl8CyfXQ0tGgW6XBL8L4LM/UTEbNXYRbLwU6w+CgrKBNbrQWt4FUtTfaU5jSYQ=="],
 
     "agent": ["agent@workspace:apps/agent"],
-
-    "bucket": ["bucket@workspace:common/bucket"],
 
     "buffer-from": ["buffer-from@1.1.2", "", {}, "sha512-E+XQCRwSbaaiChtv6k6Dwgc+bx+Bs6vuKJHHl5kox/BaKbhiXzqQOwK4cO22yElGp2OCmjwVhT3HmxgyPGnJfQ=="],
 
