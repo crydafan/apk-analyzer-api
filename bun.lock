@@ -10,6 +10,9 @@
         "@types/bun": "latest",
       },
       "peerDependencies": {
+        "@common/bucket": "workspace:*",
+        "@common/db": "workspace:*",
+        "@common/rabbit": "workspace:*",
         "typescript": "^5",
       },
     },

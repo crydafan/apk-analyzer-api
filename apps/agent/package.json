@@ -7,6 +7,9 @@
     "@types/bun": "latest"
   },
   "peerDependencies": {
-    "typescript": "^5"
+    "typescript": "^5",
+    "@common/db": "workspace:*",
+    "@common/rabbit": "workspace:*",
+    "@common/bucket": "workspace:*"
   }
 }
