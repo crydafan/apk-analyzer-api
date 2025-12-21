@@ -2,6 +2,7 @@
   "name": "monorepo",
   "private": true,
   "workspaces": [
-    "apps/*"
+    "apps/*",
+    "common/*"
   ]
 }
