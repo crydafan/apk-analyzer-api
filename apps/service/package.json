@@ -4,7 +4,9 @@
   "type": "module",
   "private": true,
   "scripts": {
-    "dev": "bun run --watch ./index.ts"
+    "dev": "bun run --watch ./index.ts",
+    "build": "bun build --compile --minify --sourcemap ./index.ts --outfile ./dist/service",
+    "start": "./dist/service"
   },
   "devDependencies": {
     "@types/bun": "latest"
