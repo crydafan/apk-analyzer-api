@@ -1,5 +1,6 @@
 import { sub, Ack, Drop } from "@common/rabbit";
 import { db, schema, operator } from "@common/db";
+import { bucket } from "@common/bucket";
 
 type MessageBody = {
   jobId: string; // Job id
@@ -33,8 +34,17 @@ const consumer = sub("jobs", async (msg) => {
     })
     .where(operator.eq(schema.jobsTable.id, body.jobId));
 
-  // Simulate a 3 second task
-  await new Promise((resolve) => setTimeout(resolve, 3000));
+  const downloadUrl = bucket.presign(body.fileName);
+  const response = await fetch(process.env.ANALYSIS_SERVICE_URL!, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ url: downloadUrl }),
+  });
+  const result = await response.json();
+
+  console.log(`⚙️ Job result: ${JSON.stringify(result).slice(0, 100)}...}`);
 
   job.status = "completed";
   job.updatedAt = new Date();

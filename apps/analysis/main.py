@@ -3,9 +3,10 @@ FastAPI application for analyzing Android APK files.
 """
 
 import tempfile
-
 from contextlib import asynccontextmanager
-from fastapi import FastAPI, UploadFile, File, HTTPException
+
+import requests
+from fastapi import FastAPI, HTTPException
 from fastapi.responses import JSONResponse
 
 from loguru import logger
@@ -96,49 +97,25 @@ async def health():
 
 
 @app.post("/")
-async def root(file: UploadFile = File(...)):
+async def root(body: dict[str, str]):
     """
     Analyze an uploaded APK file.
     Returns extracted metadata and analysis results.
     """
-    if not file.filename or not file.filename.endswith(".apk"):
-        raise HTTPException(status_code=400, detail="File must be an APK")
-
-    # Save to temp file for analysis
-    with tempfile.NamedTemporaryFile(suffix=".apk") as tmp:
-        content = await file.read()
-        tmp.write(content)
-
-        try:
-            result = analyze_apk(tmp.name)
-            return JSONResponse(content=result)
-        except Exception as e:
-            raise HTTPException(status_code=500, detail=str(e)) from e
-
-
-"""
-@app.post("/analyze-url")
-async def analyze_from_url(body: dict):
-    import httpx
-
     url = body.get("url")
     if not url:
         raise HTTPException(status_code=400, detail="Missing 'url' field")
 
-    # Download APK to temp file
-    with tempfile.NamedTemporaryFile(delete=False, suffix=".apk") as tmp:
-        async with httpx.AsyncClient() as client:
-            response = await client.get(url)
-            if response.status_code != 200:
-                raise HTTPException(status_code=400, detail="Failed to download APK")
-            tmp.write(response.content)
-            tmp_path = tmp.name
+    with requests.get(url, stream=True, timeout=30) as response:
+        response.raise_for_status()
 
-    try:
-        result = analyze_apk(tmp_path)
-        return JSONResponse(content=result)
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
-    finally:
-        os.unlink(tmp_path)
-"""
+        with tempfile.NamedTemporaryFile() as file:
+            for chunk in response.iter_content(chunk_size=8192):
+                file.write(chunk)
+            file.flush()
+
+            try:
+                result = analyze_apk(file.name)
+                return JSONResponse(content=result)
+            except Exception as e:
+                raise HTTPException(status_code=500, detail=str(e)) from e
