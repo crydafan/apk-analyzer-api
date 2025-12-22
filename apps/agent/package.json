@@ -1,0 +1,20 @@
+{
+  "name": "agent",
+  "module": "index.ts",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "dev": "bun run --watch ./index.ts",
+    "build": "bun build --compile --minify --sourcemap ./index.ts --outfile ./dist/agent",
+    "start": "./dist/agent"
+  },
+  "devDependencies": {
+    "@types/bun": "latest"
+  },
+  "peerDependencies": {
+    "typescript": "^5",
+    "@common/db": "workspace:*",
+    "@common/rabbit": "workspace:*",
+    "@common/bucket": "workspace:*"
+  }
+}

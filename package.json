@@ -1,0 +1,17 @@
+{
+  "name": "monorepo",
+  "private": true,
+  "scripts": {
+    "service:dev": "bun run --cwd=./apps/service dev",
+    "service:build": "bun run --cwd=./apps/service build",
+    "service": "bun run --cwd=./apps/service start",
+    "agent:dev": "bun run --cwd=./apps/agent dev",
+    "agent:build": "bun run --cwd=./apps/agent build",
+    "agent": "bun run --cwd=./apps/agent start",
+    "build": "bun run service:build && bun run agent:build"
+  },
+  "workspaces": [
+    "apps/*",
+    "common/*"
+  ]
+}

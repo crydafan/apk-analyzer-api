@@ -1,0 +1,23 @@
+{
+  "name": "service",
+  "module": "index.ts",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "dev": "bun run --watch ./index.ts",
+    "build": "bun build --compile --minify --sourcemap ./index.ts --outfile ./dist/service",
+    "start": "./dist/service"
+  },
+  "devDependencies": {
+    "@types/bun": "latest"
+  },
+  "peerDependencies": {
+    "typescript": "^5"
+  },
+  "dependencies": {
+    "elysia": "^1.4.19",
+    "@common/db": "workspace:*",
+    "@common/rabbit": "workspace:*",
+    "@common/bucket": "workspace:*"
+  }
+}
