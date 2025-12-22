@@ -2,8 +2,8 @@ import { sub, Ack, Drop } from "@common/rabbit";
 import { db, schema, operator } from "@common/db";
 
 type MessageBody = {
-  id: string; // Job id
-  key: string; // Storage key
+  jobId: string; // Job id
+  fileName: string; // Storage key
 };
 
 const consumer = sub("jobs", async (msg) => {
@@ -12,17 +12,16 @@ const consumer = sub("jobs", async (msg) => {
   const [job] = await db
     .select()
     .from(schema.jobsTable)
-    .where(operator.eq(schema.jobsTable.id, body.id))
+    .where(operator.eq(schema.jobsTable.id, body.jobId))
     .limit(1);
 
   if (!job) {
     // No job with such id found, to whom are we supposed to process this?
-    console.log(`⚙️ Job with id ${body.id} not found, dropping message.`);
+    console.log(`⚙️ Job with id ${body.jobId} not found, dropping message.`);
     return Drop;
   }
 
-  console.log(`⚙️ Processing job with id ${body.id}`);
-
+  console.log(`⚙️ Processing job with id ${body.jobId}`);
   job.status = "in_progress";
   job.updatedAt = new Date();
 
@@ -32,7 +31,7 @@ const consumer = sub("jobs", async (msg) => {
       status: job.status,
       updatedAt: job.updatedAt,
     })
-    .where(operator.eq(schema.jobsTable.id, body.id));
+    .where(operator.eq(schema.jobsTable.id, body.jobId));
 
   // Simulate a 3 second task
   await new Promise((resolve) => setTimeout(resolve, 3000));
@@ -46,9 +45,9 @@ const consumer = sub("jobs", async (msg) => {
       status: job.status,
       updatedAt: job.updatedAt,
     })
-    .where(operator.eq(schema.jobsTable.id, body.id));
+    .where(operator.eq(schema.jobsTable.id, body.jobId));
 
-  console.log(`⚙️ Completed job with id ${body.id}`);
+  console.log(`⚙️ Completed job with id ${body.jobId}`);
 
   return Ack;
 });

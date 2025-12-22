@@ -36,7 +36,7 @@ const app = new Elysia()
       const [job] = await db.insert(schema.jobsTable).values({}).returning();
 
       const publisher = pub(["jobs"]);
-      await publisher.send("jobs", { id: job!.id });
+      await publisher.send("jobs", { jobId: job!.id, fileName: file.name });
 
       return status(201, {
         success: true,
